@@ -13,8 +13,8 @@
     "url": "git+https://github.com/varbees/BWI-Backend-Project.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "varbees",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
