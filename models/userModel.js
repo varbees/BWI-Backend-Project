@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const userSchema = mongoose.Schema(
   {
@@ -6,9 +7,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, 'Name is required'],
     },
-    profilePicture: {
-      type: String,
-    },
+
     email: {
       type: String,
       unique: true,
@@ -26,6 +25,9 @@ const userSchema = mongoose.Schema(
     password: {
       type: String,
       required: [true, 'Password is required'],
+    },
+    profilePicture: {
+      type: String,
     },
     isAdmin: {
       type: Boolean,
@@ -49,6 +51,10 @@ userSchema.pre('save', async function (next) {
   const salt = await bcrypt.genSalt(9);
   this.password = await bcrypt.hash(this.password, salt);
 });
+
+userSchema.methods.matchPassword = async function (formPassword) {
+  return await bcrypt.compare(formPassword, this.password);
+};
 
 const User = mongoose.model('User', userSchema);
 
