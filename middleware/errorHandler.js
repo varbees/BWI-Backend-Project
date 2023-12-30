@@ -11,7 +11,7 @@ const errorHandler = (err, req, res, next) => {
   let message = err.message;
   res.status(statusdCode).json({
     message,
-    stack: __prod__ ? '' : err.stack,
+    stack: __prod__ ? '☃️' : err.stack,
   });
 };
 

@@ -1,6 +1,9 @@
 import express from 'express';
 import { __port__ } from './config/constants.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
+import connectDB from './config/db.js';
+
+connectDB();
 
 const app = express();
 
