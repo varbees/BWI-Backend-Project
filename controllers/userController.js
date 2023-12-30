@@ -7,7 +7,6 @@ import asyncHandler from '../middleware/asyncHandler.js';
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, phoneNumber, password } = req.body;
   const profilePicture = req.file.path;
-  console.log(profilePicture);
   const query = {};
   if (email) query.email = email;
   if (phoneNumber) query.phoneNumber = phoneNumber;
