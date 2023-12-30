@@ -5,8 +5,9 @@ import asyncHandler from '../middleware/asyncHandler.js';
 // @route   POST /api/users/login
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, phoneNumber, password, profilePicture } = req.body;
-
+  const { name, email, phoneNumber, password } = req.body;
+  const profilePicture = req.file.path;
+  console.log(profilePicture);
   const query = {};
   if (email) query.email = email;
   if (phoneNumber) query.phoneNumber = phoneNumber;
