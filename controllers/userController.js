@@ -1,5 +1,6 @@
 import User from '../models/userModel.js';
 import asyncHandler from '../middleware/asyncHandler.js';
+import generateToken from '../utils/generateToken.js';
 
 // @desc    Singup user and TODO: get token
 // @route   POST /api/users/login
@@ -26,6 +27,8 @@ const registerUser = asyncHandler(async (req, res) => {
     profilePicture,
   });
   if (user) {
+    generateToken(res, user._id);
+
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -53,7 +56,7 @@ const loginUser = asyncHandler(async (req, res) => {
   }
   const user = await User.findOne(query);
   if (user && user.matchPassword(password)) {
-    // TODO: Generate Token Here
+    generateToken(res, user._id);
     res.json({
       _id: user._id,
       name: user.name,

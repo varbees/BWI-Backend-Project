@@ -1,4 +1,5 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import { __port__ } from './config/constants.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
 import connectDB from './config/db.js';
@@ -9,6 +10,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
   res.send('Build With Innovation 1.0.0');
