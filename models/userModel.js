@@ -11,6 +11,7 @@ const userSchema = mongoose.Schema(
     email: {
       type: String,
       unique: true,
+      sparse: true,
       required: function () {
         return !this.phoneNumber;
       },
@@ -18,6 +19,7 @@ const userSchema = mongoose.Schema(
     phoneNumber: {
       type: String,
       unique: true,
+      sparse: true,
       required: function () {
         return !this.email;
       },
@@ -28,6 +30,7 @@ const userSchema = mongoose.Schema(
     },
     profilePicture: {
       type: String,
+      required: [true, 'Profile picture is required'],
     },
     isAdmin: {
       type: Boolean,

@@ -16,6 +16,8 @@ app.get('/', (req, res) => {
   res.send('Build With Innovation 1.0.0');
 });
 
+app.use('/uploads', express.static('uploads'));
+
 app.use('/api/users', userRoutes);
 
 // app.get('*', (req, res) => {
