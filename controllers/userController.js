@@ -8,7 +8,10 @@ import generateImageURL from '../utils/generateImageURL.js';
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, phoneNumber, password } = req.body;
-  const profilePicture = req.file.path;
+  let profilePicture;
+  if (req.file) {
+    profilePicture = req.file.path;
+  }
 
   const query = {};
   if (email) query.email = email;
@@ -75,7 +78,7 @@ const loginUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(401);
-    throw new Error(`Invalid email/phone number or password`);
+    throw new Error(`Invalid email/phone or password`);
   }
 });
 
@@ -135,12 +138,15 @@ const deleteUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Singup admin
-// @route   POST /api/users/login
+// @desc    Create admin account
+// @route   POST /api/users/
 // @access  Private/Admin
 const registerAdmin = asyncHandler(async (req, res) => {
   const { name, email, phoneNumber, password } = req.body;
-  const profilePicture = req.file.path;
+  let profilePicture;
+  if (req.file) {
+    profilePicture = req.file.path;
+  }
 
   const query = {};
   if (email) query.email = email;

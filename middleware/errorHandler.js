@@ -9,6 +9,12 @@ const notFound = (req, res, next) => {
 const errorHandler = (err, req, res, next) => {
   let statusdCode = res.statusdCode === 200 ? 500 : res.statusCode;
   let message = err.message;
+
+  if (err.name === 'CastError' && err.kind === 'ObjectId') {
+    message = 'Resource not found';
+    statusdCode = 404;
+  }
+
   res.status(statusdCode).json({
     message,
     stack: __prod__ ? '☃️' : err.stack,

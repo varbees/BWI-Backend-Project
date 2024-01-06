@@ -4,6 +4,7 @@ import { __port__ } from './config/constants.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
+import { swaggerUi, swaggerDocs } from './swagger.js';
 
 connectDB();
 const app = express();
@@ -16,13 +17,12 @@ app.get('/', (req, res) => {
   res.send('Build With Innovation 1.0.0');
 });
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 app.use('/uploads', express.static('uploads'));
 
 app.use('/api/users', userRoutes);
 
-// app.get('*', (req, res) => {
-//   res.json({ message: 'Not Found' });
-// });
 app.use(notFound);
 app.use(errorHandler);
 
