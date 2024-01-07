@@ -2,6 +2,7 @@ import User from '../models/userModel.js';
 import asyncHandler from '../middleware/asyncHandler.js';
 import generateToken from '../utils/generateToken.js';
 import generateImageURL from '../utils/generateImageURL.js';
+import validationHandler from '../middleware/validationHandler.js';
 
 // @desc    Singup user
 // @route   POST /api/users/login
@@ -12,6 +13,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (req.file) {
     profilePicture = req.file.path;
   }
+  validationHandler(res, { email, phoneNumber });
 
   const query = {};
   if (email) query.email = email;
@@ -115,7 +117,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     }
   }
   const updatedUser = await user.save();
-  updateUser.profilePicture = generateImageURL(req, updateUser.profilePicture);
+  updatedUser.profilePicture = generateImageURL(
+    req,
+    updatedUser.profilePicture
+  );
   res.status(200).json({
     _id: updatedUser._id,
     name: updatedUser.name,
@@ -147,7 +152,7 @@ const registerAdmin = asyncHandler(async (req, res) => {
   if (req.file) {
     profilePicture = req.file.path;
   }
-
+  validationHandler(res, { email, phoneNumber });
   const query = {};
   if (email) query.email = email;
   if (phoneNumber) query.phoneNumber = phoneNumber;

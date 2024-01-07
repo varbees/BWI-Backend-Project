@@ -5,6 +5,7 @@ import { errorHandler, notFound } from './middleware/errorHandler.js';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import { swaggerUi, swaggerDocs } from './swagger.js';
+import path from 'path';
 
 connectDB();
 const app = express();
@@ -14,7 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.get('/', (req, res) => {
-  res.send('Build With Innovation 1.0.0');
+  const __dirname = path.resolve();
+  const indexFilePath = path.join(__dirname, 'index.html');
+  res.sendFile(indexFilePath);
 });
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
